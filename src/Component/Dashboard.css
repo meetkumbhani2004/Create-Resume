@@ -1,0 +1,29 @@
+/* .Homepage-form{
+    padding:15px;
+  font-family: 'Arial';
+  background: #527088;
+  border-radius: 20px;
+  max-width: 370px;
+} */
+
+.home-btn{
+    background-color: #044044;
+  color: white;
+  padding: 20px 30px;
+  margin: 10px 10px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  width: 20%;
+  font-size: 20px;
+  
+  transition: 0.5s ease-in-out;
+}
+
+.home-btn:hover{
+    background: #589b5dcb;
+}
+.home-head{
+  font-style: italic;
+  font-weight: bold;
+}

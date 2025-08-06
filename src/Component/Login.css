@@ -1,0 +1,87 @@
+.Hero{
+    padding: 0px 85px;
+}
+
+
+
+.log-tit{
+    font-size: 40px;
+    color: #ffffff;
+    text-align: center;
+}
+
+.login-form .input1 {
+  padding: 10px;
+}
+
+.login-form input[type="email"],
+.login-form input[type="password"] {
+ outline: none;
+  padding: 19px;
+  border: none;
+  background: #F7F5EF;
+  width: 100%;
+  border-radius: 10px;
+
+}
+input[type="email"]:hover,
+input[type="password"]:hover{
+    border: 2px solid #DF9A7C;
+}
+
+.login-btn {
+     background-color: #044044;
+  color: white;
+  padding: 20px 30px;
+  margin: 10px 10px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  font-size: 20px;
+  
+  transition: 0.5s ease-in-out;
+}
+.login-btn:hover{
+     background: #589b5dcb;
+}
+link{
+    color: antiquewhite;
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+}
+.acc{
+margin-top: 40px;
+color:#ffffffff;
+}
+
+/*  */
+
+@media(max-width:600px){
+
+   .log-tit{
+    font-size: 20px;
+} 
+.login-form input[type="email"],
+.login-form input[type="password"] {
+  width: 80%;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-top: 20px;
+}
+.login-btn {
+  background-color: #1C1C1C;
+  color: white;
+  padding: 10px 20px;
+  margin: 5px 0px;
+  border-radius: 20px;
+  font-size: 10px;
+  transition: 0.5s ease-in-out;
+}
+}
+

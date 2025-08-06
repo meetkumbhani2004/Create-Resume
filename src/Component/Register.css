@@ -1,0 +1,79 @@
+.Hero{
+    padding: 0px 85px;
+}
+.account-heading{
+    font-size: 40px;
+    color: #ffffff;
+    text-align: center;
+}
+
+.register-form .input1 {
+  padding: 10px;
+}
+.register-form input{
+ outline: none;
+  padding: 19px;
+  border: none;
+  background: #F7F5EF;
+  width: 100%;
+  border-radius: 10px;
+
+}
+
+.register-form input[type="text"]
+ {
+ outline: none;
+  padding: 19px;
+  border: none;
+  background: #F7F5EF;
+  width: 100%;
+  border-radius: 10px;
+}
+.error{
+  font-size: 15px;
+  color: rgb(228, 63, 63);
+}
+.breadcrumb {
+  margin-bottom: 30px;
+  color: rgb(0, 0, 0);
+  text-align: center;
+}
+
+
+.register-form input:hover{
+    border: 2px solid #DF9A7C;
+}
+
+.register-btn {
+     background-color: #044044;
+  color: white;
+  padding: 20px 30px;
+  margin: 10px 10px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  font-size: 20px;
+  
+  transition: 0.5s ease-in-out;
+}
+.register-btn:hover{
+    background: #589b5dcb;
+}
+.acc{
+margin-top: 40px;
+color:#ffffffff;
+}
+.newsletter1{
+  text-align: center;
+}
+
+@media(max-width:600px){
+  .register-form input {
+  width: 80%;
+  margin-bottom: 15px;
+  padding: 19px;
+  border-radius: 15px;
+
+}
+}
