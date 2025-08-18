@@ -10,6 +10,7 @@ const example = () => {
         <h4>Mahadeva tere damru dam dam</h4>
         <h4>hello</h4>
         <h5>jay ho</h5>
+        <h6> shree ram</h6>
     </div>
   )
 }
