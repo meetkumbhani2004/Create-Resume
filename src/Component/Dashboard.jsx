@@ -32,6 +32,7 @@ const Homepaze = () => {
                     <button className='home-btn' onClick={() => {  navigate('/resume'); }}   style={{ cursor: 'pointer' }}>Build your free Resume</button>
                 </div>
             </form>
+            <h2>kem coh</h2>
             </div>
     </div>
   )
