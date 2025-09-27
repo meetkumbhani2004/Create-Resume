@@ -1,5 +1,4 @@
 import "./Login.css";
-import bgImage from "../loging.jpg";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -28,16 +27,6 @@ const Login = () => {
   return (
     <div
       className="Hero"
-      style={{
-        backgroundImage: `url(${bgImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        height: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
     >
       <div className="login-container">
         <h3 className="log-tit">LOGIN</h3>
@@ -67,13 +56,17 @@ const Login = () => {
               Register Here
             </a>
           </p>
-
+    <div className="button">
           <button className="login-btn" type="submit">
             Login
           </button>
+          <a href="/" className="step4btn" >
+            Back
+          </a>
+          </div>
         </form>
       </div>
-      <h1>meet</h1>
+      
     </div> 
   );
 };

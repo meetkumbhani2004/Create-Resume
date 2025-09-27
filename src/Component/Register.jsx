@@ -1,5 +1,4 @@
 import "./Register.css";
-import bgImage from "../loging.jpg";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -38,16 +37,6 @@ const RegisterPage = () => {
   return (
     <div
       className="Hero"
-      style={{
-        backgroundImage: `url(${bgImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        height: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
     >
       <div className="register-container">
         <h2 className="account-heading">SIGN UP</h2>
@@ -102,10 +91,14 @@ const RegisterPage = () => {
             If you already have an account, please{" "}
             <a href="/login">Login Here</a>
           </p>
-
+    <div className="regibtn">
           <button type="submit" className="register-btn">
             Register
           </button>
+          <a href="/" className="step4btn" >
+            Back
+          </a>
+          </div>
         </form>
       </div>
     </div>
