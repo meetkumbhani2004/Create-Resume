@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import logo from "./meet-logo.png";
+// import logo from "../../public/meet-logo.png";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const Navbar = () => {
 
         {/* Logo */}
         <img
-          src={logo}
+          src="meet-logo.png"
           alt="logo"
           className="h-16 w-16 sm:h-24 sm:w-24 object-contain"
         />
