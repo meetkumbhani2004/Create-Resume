@@ -1,6 +1,5 @@
-import "./Login.css";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -25,49 +24,96 @@ const Login = () => {
   };
 
   return (
-    <div
-      className="Hero"
-    >
-      <div className="login-container">
-        <h3 className="log-tit">LOGIN</h3>
-        <form onSubmit={handleLogin} className="login-form">
-          <div className="input1">
-            <input
-              type="email"
-              placeholder="Enter your Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="input1">
-            <input
-              type="password"
-              placeholder="Enter your Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+    <div className="relative flex h-screen w-full items-center justify-center bg-white px-5">
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/50" />
 
-          <p className="acc">
+      {/* Glass card */}
+      <div
+        className="
+          relative z-10 w-full max-w-md rounded-2xl
+          bg-white/10 backdrop-blur-md
+          p-8 sm:p-10 text-center shadow-2xl
+        "
+      >
+        <h3
+          className="
+            mb-8 text-3xl sm:text-4xl font-bold text-white
+            drop-shadow-[1px_1px_5px_rgba(0,0,0,0.6)]
+          "
+        >
+          LOGIN
+        </h3>
+
+        <form onSubmit={handleLogin} className="space-y-6">
+          {/* Email */}
+          <input
+            type="email"
+            placeholder="Enter your Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="
+              w-4/5 rounded-lg border-none bg-white/90
+              px-4 py-3 text-base text-gray-800
+              focus:outline-none focus:ring-2 focus:ring-amber-400
+              transition
+            "
+          />
+
+          {/* Password */}
+          <input
+            type="password"
+            placeholder="Enter your Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="
+              w-4/5 rounded-lg border-none bg-white/90
+              px-4 py-3 text-base text-gray-800
+              focus:outline-none focus:ring-2 focus:ring-amber-400
+              transition
+            "
+          />
+
+          {/* Register link */}
+          <p className="text-sm text-white">
             If you don't have an account, please{" "}
-            <a href="register" className="link">
+            <Link
+              to="/register"
+              className="text-amber-300 underline hover:text-white transition"
+            >
               Register Here
-            </a>
+            </Link>
           </p>
-    <div className="button">
-          <button className="login-btn" type="submit">
-            Login
-          </button>
-          <a href="/" className="step4btn" >
-            Back
-          </a>
+
+          {/* Buttons */}
+          <div className="mt-4 flex flex-col sm:flex-row sm:justify-between gap-4">
+            <button
+              type="submit"
+              className="
+                flex-1 rounded-full bg-teal-900 px-6 py-3
+                text-lg text-white shadow-md transition
+                hover:-translate-y-1 hover:bg-emerald-600 hover:shadow-xl
+              "
+            >
+              Login
+            </button>
+
+            <Link
+              to="/"
+              className="
+                flex-1 rounded-md bg-amber-400 px-6 py-3
+                text-lg text-white text-center shadow-md transition
+                hover:-translate-y-1 hover:bg-amber-500 hover:shadow-xl
+              "
+            >
+              Back
+            </Link>
           </div>
         </form>
       </div>
-      
-    </div> 
+    </div>
   );
 };
 
