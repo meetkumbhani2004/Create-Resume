@@ -349,11 +349,11 @@ const loadResume = (index) => {
     </div>
 
         <div className="photo-upload">
-          {formData.photo instanceof File ? (
-            <img src={URL.createObjectURL(formData.photo)} alt="Preview" />
-          ) : (
-            <img src="https://via.placeholder.com/120" alt="Default Avatar" />
-          )}
+         {formData.photo ? (
+                <img src={URL.createObjectURL(formData.photo)} alt="Profile" className="w-32 h-32 rounded" />
+              ) : (
+                <div className="w-32 h-32 bg-gray-200 flex items-center justify-center rounded">Photo</div>
+              )}
           <label>Photo (Optional)</label>
           <input type="file" accept="image/*" onChange={handlePhoto} />
           
