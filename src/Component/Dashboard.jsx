@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import API from "../api"; // ✅ Using your configured axios instance
 import Step1Contact from "../page/FormHeading";
 import Step2Experience from "../page/Experience";
 import Step3Education from "../page/Education";
@@ -8,7 +8,7 @@ import Step4Skills from "../page/Skill";
 import Step5Summary from "../page/Summery";
 import Step6Additional from "../page/Addtional";
 import TemplateSelector from "./Templateselecter";
-import "./ResumeForm.css"
+import "./ResumeForm.css";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -33,11 +33,11 @@ export default function Dashboard() {
     experience: [],
     photo: null,
     hobbies: [],
-languages: [],
-awards: [],
+    languages: [],
+    awards: [],
   });
 
-  // Other input states
+  // Input states
   const [skillInput, setSkillInput] = useState("");
   const [aiSkills, setAiSkills] = useState([]);
   const [eduInput, setEduInput] = useState({
@@ -79,9 +79,7 @@ awards: [],
 
   const fetchResumes = async (email) => {
     try {
-      const res = await axios.get("http://localhost:5000/api/resumes", {
-        params: { userEmail: email },
-      });
+      const res = await API.get("/resumes", { params: { userEmail: email } });
       setResumes(res.data.resumes || []);
     } catch (err) {
       console.error("Error fetching resumes:", err);
@@ -90,7 +88,7 @@ awards: [],
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/resumes/${id}`);
+      await API.delete(`/resumes/${id}`);
       setResumes((prev) => prev.filter((r) => r._id !== id));
     } catch (err) {
       console.error("Delete resume error:", err);
@@ -163,6 +161,7 @@ awards: [],
       editIndex: undefined,
     });
   };
+
   const editExperience = (i) => setExpInput({ ...formData.experience[i], editIndex: i });
   const deleteExperience = (i) =>
     setFormData((p) => ({ ...p, experience: p.experience.filter((_, j) => j !== i) }));
@@ -203,6 +202,7 @@ awards: [],
       editIndex: undefined,
     });
   };
+
   const editEducation = (i) => setEduInput({ ...formData.education[i], editIndex: i });
   const deleteEducation = (i) =>
     setFormData((p) => ({ ...p, education: p.education.filter((_, j) => j !== i) }));
@@ -222,7 +222,7 @@ awards: [],
         bgColor,
         themeColor,
       };
-      await axios.post("http://localhost:5000/api/resumes", payload);
+      await API.post("/resumes", payload);
       alert("Resume saved!");
       fetchResumes(currentUser.email);
       setStep("dashboard");
@@ -240,42 +240,38 @@ awards: [],
     setStep(7);
   };
 
-    // Generate AI description for experience (calls backend)
-    const generateAIExperience = async () => {
-      if (!expInput.jobTitle || !expInput.employer) {
-        alert("Please enter Job Title and Employer first!");
-        return;
-      }
-      setLoadingAI(true);
-      try {
-        const res = await axios.post("http://localhost:5000/api/ai/generate-description", {
-          jobTitle: expInput.jobTitle,
-          employer: expInput.employer,
-          skills: formData.skills || [],
-        });
-        setExpInput((p) => ({ ...p, description: res.data.description }));
-      } catch (err) {
-        console.error(err);
-        alert("AI generation failed.");
-      } finally {
-        setLoadingAI(false);
-      }
-    };
-  
-      const getAISkills = async () => {
+  // -------------------- AI --------------------
+  const generateAIExperience = async () => {
+    if (!expInput.jobTitle || !expInput.employer) {
+      alert("Please enter Job Title and Employer first!");
+      return;
+    }
+    setLoadingAI(true);
+    try {
+      const res = await API.post("/ai/generate-description", {
+        jobTitle: expInput.jobTitle,
+        employer: expInput.employer,
+        skills: formData.skills || [],
+      });
+      setExpInput((p) => ({ ...p, description: res.data.description }));
+    } catch (err) {
+      console.error(err);
+      alert("AI generation failed.");
+    } finally {
+      setLoadingAI(false);
+    }
+  };
+
+  const getAISkills = async () => {
     setLoading(true);
     try {
-      // prefer current expInput jobTitle, else use first saved experience, else use name
       const jobTitle =
         expInput.jobTitle ||
         formData.experience?.[0]?.jobTitle ||
         formData.name ||
         "Professional";
       const employer = expInput.employer || formData.experience?.[0]?.employer || "";
-      const res = await axios.post("http://localhost:5000/api/ai/generate-skills", {
-        jobTitle,
-        employer,
-      });
+      const res = await API.post("/ai/generate-skills", { jobTitle, employer });
       setAiSkills(res.data.skills || []);
     } catch (err) {
       console.error("Error fetching AI skills:", err);
@@ -285,19 +281,18 @@ awards: [],
     }
   };
 
-    // Generate summary via backend
-    const generateAISummary = async () => {
-      setLoadingAI(true);
-      try {
-        const res = await axios.post("http://localhost:5000/api/ai/generate-summary", { formData });
-        setFormData((p) => ({ ...p, summary: res.data.summary }));
-      } catch (err) {
-        console.error("Error generating summary:", err);
-        alert("AI summary failed.");
-      } finally {
-        setLoadingAI(false);
-      }
-    };
+  const generateAISummary = async () => {
+    setLoadingAI(true);
+    try {
+      const res = await API.post("/ai/generate-summary", { formData });
+      setFormData((p) => ({ ...p, summary: res.data.summary }));
+    } catch (err) {
+      console.error("Error generating summary:", err);
+      alert("AI summary failed.");
+    } finally {
+      setLoadingAI(false);
+    }
+  };
 
 
   

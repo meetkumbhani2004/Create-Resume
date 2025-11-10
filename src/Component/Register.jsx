@@ -13,9 +13,10 @@ export default function Register() {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.post("/auth/register", form);
-      setMsg("✅ Registered successfully! Redirecting to login...");
-      setTimeout(() => navigate("/login"), 1500);
+     await API.post("/auth/register", form);
+setMsg("✅ Registered successfully! Redirecting to login...");
+setTimeout(() => navigate("/login"), 1500);
+
     } catch (err) {
       const m = err.response?.data?.message || "❌ Something went wrong.";
       setMsg(m);
