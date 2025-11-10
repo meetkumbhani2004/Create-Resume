@@ -1,77 +1,114 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import logo from "../Images/meet-logo.png";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const Navbar = () => {
+export default function Navbar() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
-    const savedUser = localStorage.getItem("currentUser");
-    if (savedUser) setUser(JSON.parse(savedUser));
-  }, []);
+    const user = localStorage.getItem("currentUser");
+    setIsLoggedIn(!!user);
+  }, [location]);
+
+  const handleLogin = () => navigate("/login");
 
   const handleLogout = () => {
+    localStorage.removeItem("token");
     localStorage.removeItem("currentUser");
-    setUser(null);
-    setTimeout(() => navigate("/login"), 1500);
+    setIsLoggedIn(false);
+    navigate("/");
+  };
+
+  const isHomePage = location.pathname === "/";
+
+  //  Smooth Scroll function
+  const scrollToSection = (id) => {
+    const section = document.querySelector(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
-    <nav className="w-full px-4 sm:px-6 py-3">
+    <nav className="flex items-center justify-between px-8 py-4 bg-white shadow-sm sticky top-0 z-50">
+      {/* 🔹 Logo */}
       <div
-        className="
-          mx-auto flex max-w-6xl items-center justify-between
-          rounded-2xl bg-slate-600 text-white
-          px-4 py-3 sm:px-6 sm:py-4
-        "
+        className="flex items-center space-x-2 cursor-pointer"
+        onClick={() => navigate("/")}
       >
-        {/* User info */}
-        <div className="text-center sm:text-left">
-          <h2 className="text-lg sm:text-xl font-semibold">
-            {user ? `${user.firstName} ${user.lastName}` : "Guest"}
-          </h2>
-          <h3 className="text-sm text-gray-200">
-            {user ? user.email : "No email"}
-          </h3>
-        </div>
+        <span className="text-2xl font-bold text-gray-900">Resume</span>
+        <span className="text-green-500 text-4xl font-bold leading-none">.</span>
+      </div>
 
-        {/* Logo */}
-        <img
-          src={logo}
-          alt="logo"
-          className="h-16 w-16 sm:h-24 sm:w-24 object-contain"
-        />
+      {/* 🏠 Middle Menu */}
+      {isHomePage && (
+        <ul className="hidden md:flex space-x-8 text-gray-700 font-medium">
+          <li>
+            <button
+              onClick={() => scrollToSection("#home")}
+              className="hover:text-green-600 transition-colors"
+            >
+              Home
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => scrollToSection("#features")}
+              className="hover:text-green-600 transition-colors"
+            >
+              Features
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => scrollToSection("#testimonials")}
+              className="hover:text-green-600 transition-colors"
+            >
+              Testimonials
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => scrollToSection("#contact")}
+              className="hover:text-green-600 transition-colors"
+            >
+              Contact
+            </button>
+          </li>
+        </ul>
+      )}
 
-        {/* Button */}
-        {user ? (
+      {/* 🔐 Right Side */}
+      {isLoggedIn ? (
+        <div className="flex items-center space-x-4">
+          {location.pathname !== "/dashboard" && (
+            <button
+              onClick={() => navigate("/dashboard")}
+              className="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-full transition-all"
+            >
+              Dashboard
+            </button>
+          )}
           <button
-            type="button"
             onClick={handleLogout}
-            className="
-              rounded-full bg-gray-900 px-6 py-2
-              text-lg sm:text-xl transition
-              hover:bg-amber-500
-            "
+            className="border border-gray-300 hover:border-red-500 text-gray-700 hover:text-red-600 px-4 py-2 rounded-full transition-all"
           >
             Logout
           </button>
-        ) : (
-          <button
-            type="button"
-            onClick={() => navigate("/login")}
-            className="
-              rounded-full bg-gray-900 px-6 py-2
-              text-lg sm:text-xl transition
-              hover:bg-amber-500
-            "
-          >
-            Login
-          </button>
-        )}
-      </div>
+        </div>
+      ) : (
+        isHomePage && (
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={handleLogin}
+              className="text-gray-700 hover:text-green-600 font-medium"
+            >
+              Login
+            </button>
+          </div>
+        )
+      )}
     </nav>
   );
-};
-
-export default Navbar;
+}

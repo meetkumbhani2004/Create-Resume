@@ -1,120 +1,108 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import API from "../api";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function Login() {
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [msg, setMsg] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+  const submit = async (e) => {
     e.preventDefault();
-
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const matchedUser = users.find(
-      (user) => user.email === email && user.password === password
-    );
-
-    if (matchedUser) {
-      alert("Login successful!");
-      localStorage.setItem("currentUser", JSON.stringify(matchedUser));
-      navigate("/resume");
-    } else {
-      alert("Invalid email or password!");
+    try {
+      const res = await API.post("/auth/login", form);
+      localStorage.setItem("token", res.data.token);
+     localStorage.setItem("currentUser", JSON.stringify(res.data.user));
+      setMsg(" Login successful!");
+      setTimeout(() => navigate("/dashboard"), 800);
+    } catch (err) {
+      const m = err.response?.data?.message || "❌ Invalid credentials";
+      setMsg(m);
     }
   };
 
   return (
-    <div className="relative flex h-screen w-full items-center justify-center bg-white px-5">
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/50" />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+          Login to Your Account
+        </h2>
 
-      {/* Glass card */}
-      <div
-        className="
-          relative z-10 w-full max-w-md rounded-2xl
-          bg-white/10 backdrop-blur-md
-          p-8 sm:p-10 text-center shadow-2xl
-        "
-      >
-        <h3
-          className="
-            mb-8 text-3xl sm:text-4xl font-bold text-white
-            drop-shadow-[1px_1px_5px_rgba(0,0,0,0.6)]
-          "
-        >
-          LOGIN
-        </h3>
+        {msg && (
+          <div
+            className={`text-center text-sm mb-4 ${
+              msg.startsWith("✅")
+                ? "text-green-600"
+                : "text-red-500"
+            }`}
+          >
+            {msg}
+          </div>
+        )}
 
-        <form onSubmit={handleLogin} className="space-y-6">
+        <form onSubmit={submit} className="space-y-5">
           {/* Email */}
-          <input
-            type="email"
-            placeholder="Enter your Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="
-              w-4/5 rounded-lg border-none bg-white/90
-              px-4 py-3 text-base text-gray-800
-              focus:outline-none focus:ring-2 focus:ring-amber-400
-              transition
-            "
-          />
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+              placeholder="Enter your email"
+            />
+          </div>
 
           {/* Password */}
-          <input
-            type="password"
-            placeholder="Enter your Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="
-              w-4/5 rounded-lg border-none bg-white/90
-              px-4 py-3 text-base text-gray-800
-              focus:outline-none focus:ring-2 focus:ring-amber-400
-              transition
-            "
-          />
-
-          {/* Register link */}
-          <p className="text-sm text-white">
-            If you don't have an account, please{" "}
-            <Link
-              to="/register"
-              className="text-amber-300 underline hover:text-white transition"
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Register Here
-            </Link>
-          </p>
-
-          {/* Buttons */}
-          <div className="mt-4 flex flex-col sm:flex-row sm:justify-between gap-4">
-            <button
-              type="submit"
-              className="
-                flex-1 rounded-full bg-teal-900 px-6 py-3
-                text-lg text-white shadow-md transition
-                hover:-translate-y-1 hover:bg-emerald-600 hover:shadow-xl
-              "
-            >
-              Login
-            </button>
-
-            <Link
-              to="/"
-              className="
-                flex-1 rounded-md bg-amber-400 px-6 py-3
-                text-lg text-white text-center shadow-md transition
-                hover:-translate-y-1 hover:bg-amber-500 hover:shadow-xl
-              "
-            >
-              Back
-            </Link>
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={form.password}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+              placeholder="Enter your password"
+            />
           </div>
+
+          {/* Button */}
+          <button
+            type="submit"
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-lg shadow-md transition duration-300"
+          >
+            Login
+          </button>
         </form>
+
+        <p className="text-center text-sm text-gray-600 mt-5">
+          Don’t have an account?{" "}
+          <span
+            onClick={() => navigate("/register")}
+            className="text-indigo-600 hover:underline cursor-pointer"
+          >
+            Register
+          </span>
+        </p>
       </div>
     </div>
   );
-};
-
-export default Login;
+}

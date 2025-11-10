@@ -159,10 +159,7 @@
   font-size: 14px;
 }
 
-.form-group textarea {
-  resize: vertical;
-  min-height: 80px;
-}
+
 
 .form-group input:focus,
 .form-group textarea:focus {
@@ -365,9 +362,23 @@
   margin-top: 20px;
 }
 /* stp5 */
-.summary{
-  width: auto;
+
+.save-btn {
+  background: #ffc107;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 4px;
+
 }
+
+.save-btn:hover {
+  background: #e0a800;
+
+}
+
 
 
 
@@ -661,3 +672,5 @@
   margin-top: 30px;
 }
 }
+
+
