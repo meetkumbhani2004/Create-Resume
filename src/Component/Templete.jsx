@@ -44,19 +44,18 @@ const Template1 = ({
         {/* Header */}
         <div className="text-center mb-6">
           <div className="flex flex-col items-center">
-            {formData?.photo ? (
-              <img
-                src={
-                  typeof formData.photo === "string"
-                    ? formData.photo
-                    : URL.createObjectURL(formData.photo)
-                }
-                alt="Profile"
-                className="w-24 h-24 md:w-28 md:h-28 object-cover rounded-full mb-3 shadow-sm"
-              />
-            ) : (
-              <div className="text-gray-300 mb-4">No photo uploaded</div>
-            )}
+            {formData?.photo && (
+  <img
+    src={
+      typeof formData.photo === "string"
+        ? formData.photo
+        : URL.createObjectURL(formData.photo)
+    }
+    alt="Profile"
+    className="w-24 h-24 md:w-28 md:h-28 object-cover rounded-full mb-3 shadow-sm"
+  />
+)}
+
 
             <h1
               className="text-2xl md:text-3xl font-bold"

@@ -21,35 +21,7 @@ export default function TemplateSelector({ formData, setStep }) {
     document.documentElement.style.setProperty("--theme-color", e.target.value);
   };
 
-  const handleSave = () => {
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    if (!currentUser) {
-      alert("Please login first to save your resume!");
-      return;
-    }
 
-    const resumeData = {
-      formData,
-      bgColor,
-      themeColor,
-      fontSize,
-      lineHeight,
-      paragraphSpacing,
-      createdAt: new Date().toISOString(),
-    };
-
-    const allResumes =
-      JSON.parse(localStorage.getItem(`resumes_${currentUser.email}`)) || [];
-
-    allResumes.push(resumeData);
-    localStorage.setItem(
-      `resumes_${currentUser.email}`,
-      JSON.stringify(allResumes)
-    );
-
-    alert("Resume saved successfully!");
-    navigate("/dashboard");
-  };
 
 
 const generatePDF = async (formData) => {
@@ -222,12 +194,7 @@ const generatePDF = async (formData) => {
           >
             ⬅ Back
           </button>
-          <button
-            onClick={handleSave}
-            className="bg-green-500 hover:bg-green-600 text-white py-2 rounded"
-          >
-            💾 Save
-          </button>
+         
           <button
   onClick={() => generatePDF(formData)}
   className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"

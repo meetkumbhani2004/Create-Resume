@@ -41,21 +41,17 @@ const Template2 = ({
             style={{ backgroundColor: themeColor }}
           >
             {/* Profile Image */}
-            {formData?.photo ? (
-              <img
-                src={
-                  typeof formData.photo === "string"
-                    ? formData.photo
-                    : URL.createObjectURL(formData.photo)
-                }
-                alt="Profile"
-                className="w-32 h-32 object-cover rounded-full mx-auto mb-5 shadow-md border-2 border-white"
-              />
-            ) : (
-              <div className="text-gray-300 text-center mb-5">
-                No photo uploaded
-              </div>
-            )}
+                        {formData?.photo && (
+  <img
+    src={
+      typeof formData.photo === "string"
+        ? formData.photo
+        : URL.createObjectURL(formData.photo)
+    }
+    alt="Profile"
+    className="w-24 h-24 md:w-28 md:h-28 object-cover rounded-full mb-3 shadow-sm"
+  />
+)}
 
             {/* Personal Info */}
             <h1 className="text-2xl font-bold mb-2">

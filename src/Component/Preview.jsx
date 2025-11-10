@@ -43,19 +43,17 @@ export default function Step6Preview({
   </style>
         <div className="resume-header flex justify-between">
           <div>
-            {formData?.photo ? (
-              <img
-                src={
-                  typeof formData.photo === "string"
-                    ? formData.photo
-                    : URL.createObjectURL(formData.photo)
-                }
-                alt="Profile"
-                className="w-28 h-28 object-cover rounded-full mb-4"
-              />
-            ) : (
-              <div className="text-gray-400 mb-4">No photo uploaded</div>
-            )}
+                       {formData?.photo && (
+  <img
+    src={
+      typeof formData.photo === "string"
+        ? formData.photo
+        : URL.createObjectURL(formData.photo)
+    }
+    alt="Profile"
+    className="w-24 h-24 md:w-28 md:h-28 object-cover rounded-full mb-3 shadow-sm"
+  />
+)}
             {formData.name && (
               <h1 className="text-2xl font-bold">{formData.name}</h1>
             )}
