@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import Template1 from "./Templete";
-import Template2 from "./Templete2";
-import Step6Preview from "./Preview";
+import Template1 from "../Template/Templete";
+import Template2 from "../Template/Templete2";
+import Step6Preview from "../Template/Preview";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useNavigate } from "react-router-dom";
+import Template4 from "../Template/Templete3";
+import Template5 from "../Template/Templete5";
+import Template6 from "../Template/Templete6";
 
 export default function TemplateSelector({ formData, setStep }) {
   const [selectedTemplate, setSelectedTemplate] = useState("template1");
@@ -184,6 +187,36 @@ const generatePDF = async (formData) => {
           >
             Template 3
           </button>
+          <button
+            onClick={() => setSelectedTemplate("template4")}
+            className={`px-3 py-2 border rounded ${
+              selectedTemplate === "template4"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-100"
+            }`}
+          >
+            Template 4
+          </button>
+          <button
+            onClick={() => setSelectedTemplate("template5")}
+            className={`px-3 py-2 border rounded ${
+              selectedTemplate === "template5"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-100"
+            }`}
+          >
+            Template 5
+          </button>
+          <button
+            onClick={() => setSelectedTemplate("template6")}
+            className={`px-3 py-2 border rounded ${
+              selectedTemplate === "template6"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-100"
+            }`}
+          >
+            Template 6
+          </button>
         </div>
 
         {/* Footer Buttons */}
@@ -230,6 +263,27 @@ const generatePDF = async (formData) => {
           {selectedTemplate === "template3" && (
             <Step6Preview
               formData={formData}
+              bgColor={bgColor}
+              themeColor={themeColor}
+            />
+          )}
+          {selectedTemplate === "template4" && (
+            <Template4
+              formData={formData}
+              bgColor={bgColor}
+              themeColor={themeColor}
+            />
+          )}
+          {selectedTemplate === "template5" && (
+            <Template5
+              formData={formData}
+              bgColor={bgColor}
+              themeColor={themeColor}
+            />
+            )}
+          {selectedTemplate === "template6" && (
+            <Template6
+              formData={formData} 
               bgColor={bgColor}
               themeColor={themeColor}
             />

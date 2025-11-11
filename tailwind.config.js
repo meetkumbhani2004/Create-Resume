@@ -6,6 +6,15 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        lato: ['"Lato"', 'sans-serif'],
+      },
+      fontWeight: {
+        light: '300',
+        normal: '400',
+        bold: '700',
+        black: '900',
+      },
       keyframes: {
         "scroll-left": {
           "0%": { transform: "translateX(0)" },

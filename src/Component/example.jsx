@@ -1,20 +1,46 @@
-import React from 'react'
+const generatePDF = async (formData) => {
+  const resumeElement = document.getElementById("resume-preview");
 
-const example = () => {
-  return (
-    <div>example
-        <h1>maja aa raha <head></head></h1>
-        <h2>jay hanumn dada</h2>
-        <h3>jay kamanath mahadev
-        </h3>
-        <h4>Mahadeva tere damru dam dam</h4>
-        <h4>hello</h4>
-        <h5>jay ho</h5>
-        <h6> shree ram</h6>
-        <h1>shree radhe</h1>
-        <h4>jay shree ram</h4>
-    </div>
-  )
-}
+  if (!resumeElement) {
+    alert("Preview not found! Please ensure your template has id='resume-preview'.");
+    return;
+  }
 
-export default example
+  // Capture resume as canvas
+  const canvas = await html2canvas(resumeElement, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: "#ffffff",
+  });
+
+  const imgData = canvas.toDataURL("image/png");
+
+  // Initialize standard A4 PDF
+  const pdf = new jsPDF("p", "mm", "a4");
+  const pdfWidth = pdf.internal.pageSize.getWidth(); // 210mm
+  const pdfHeight = pdf.internal.pageSize.getHeight(); // 297mm
+
+  // Convert canvas to mm dimensions
+  const imgWidth = pdfWidth;
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+  // 🧮 Scale image if it’s taller than page
+  let finalHeight = imgHeight;
+  let finalWidth = imgWidth;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  if (imgHeight > pdfHeight) {
+    const scaleFactor = pdfHeight / imgHeight;
+    finalHeight = imgHeight * scaleFactor;
+    finalWidth = imgWidth * scaleFactor;
+  }
+
+  // Center the resume both ways
+  offsetX = (pdfWidth - finalWidth) / 2;
+  offsetY = (pdfHeight - finalHeight) / 2;
+
+  // Add image and save
+  pdf.addImage(imgData, "PNG", offsetX, offsetY, finalWidth, finalHeight);
+  pdf.save(`${formData?.name || "Resume"}.pdf`);
+};

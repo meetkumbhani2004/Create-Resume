@@ -1,6 +1,6 @@
 import React from "react";
 
-const Template1 = ({
+const Template6 = ({
   formData,
   themeColor = "#1e3a8a",
   bgColor = "#ffffff",
@@ -13,76 +13,82 @@ const Template1 = ({
     return date.toLocaleString("default", { month: "long", year: "numeric" });
   };
 
+  // Detect if background is white
+  const isWhiteBg =
+    bgColor?.toLowerCase() === "#ffffff" || bgColor?.toLowerCase() === "white";
+
   return (
     <>
       <h2 className="text-xl font-semibold mb-4 text-center md:text-2xl">
-        Template 1
+        Template 6
       </h2>
 
       <div
         id="resume-preview"
-        className="
-          mx-auto 
-          w-full 
-          max-w-3xl 
-          p-6 md:p-10 
-          bg-white 
-          shadow-md 
-          rounded-lg 
-          border border-gray-200
-          text-[14px] md:text-[15px] 
-          leading-relaxed 
-          transition-all 
-          duration-300
-        "
+        className="mx-auto w-full max-w-3xl shadow-md text-[14px] md:text-[15px] leading-relaxed transition-all duration-300 bg-white rounded-lg overflow-hidden"
         style={{
-          backgroundColor: bgColor,
           color: "#111",
           fontFamily: "Inter, sans-serif",
         }}
       >
-        {/* Header */}
-        <div className="text-center mb-6">
-          <div className="flex flex-col items-center">
-            {formData?.photo && (
-  <img
-    src={
-      typeof formData.photo === "string"
-        ? formData.photo
-        : URL.createObjectURL(formData.photo)
-    }
-    alt="Profile"
-    className="w-24 h-24 md:w-28 md:h-28 object-cover rounded-full mb-3 shadow-sm"
-  />
-)}
+        {/* 🔹 Full-width Header Section */}
+        <div
+  className="w-full relative flex flex-col items-center justify-center text-center mb-6"
+  style={{
+    background: bgColor,
+    margin: 0,
+    padding: "2.5rem 1rem 1rem", // top padding more, bottom smaller
+  }}
+>
+  {/* Profile Image */}
+  {formData?.photo && (
+    <img
+      src={
+        typeof formData.photo === "string"
+          ? formData.photo
+          : URL.createObjectURL(formData.photo)
+      }
+      alt="Profile"
+      className="w-24 h-24 md:w-28 md:h-28 object-cover rounded-full mb-4 shadow-md border-2 border-white"
+    />
+  )}
+
+  {/* Name Centered */}
+  <h1
+    className="text-4xl md:text-4xl font-bold mb-10"
+    style={{
+      color: isWhiteBg ? themeColor : "#ffffff",
+      lineHeight: "1.1",
+    }}
+  >
+    {formData?.name || "Unnamed"}
+  </h1>
+
+  {/* Info Line — touching bottom edge */}
+  <p
+    className="text-sm md:text-base absolute bottom-2 w-full text-center px-4"
+    style={{
+      color: isWhiteBg ? "#1e3a8a" : "#f3f4f6",
+    }}
+  >
+    {formData?.city || ""}
+    {formData?.city && formData?.state ? " | " : ""}
+    {formData?.state || ""}
+    {formData?.state && (formData?.email || formData?.phone) ? " | " : ""}
+    {formData?.email || ""}
+    {formData?.email && formData?.phone ? " | " : ""}
+    {formData?.phone || ""}
+  </p>
+</div>
 
 
-            <h1
-              className="text-2xl md:text-3xl font-bold"
-              style={{ color: themeColor }}
-            >
-              {formData?.name || "Unnamed"}
-            </h1>
-
-            <p className="text-sm md:text-base text-gray-600 mt-1">
-              {formData?.email || ""}
-              {formData?.email && formData?.phone ? " | " : ""}
-              {formData?.phone || ""}
-            </p>
-
-            {(formData?.city || formData?.state) && (
-              <p className="text-sm md:text-base text-gray-600">
-                {[formData.city, formData.state].filter(Boolean).join(", ")}
-              </p>
-            )}
-          </div>
-        </div>
-
+        {/* Divider */}
         <hr className="border-gray-300 mb-6" />
 
         {/* Summary */}
         {formData?.summary && (
-          <section className="mb-6">
+           
+          <section className="mb-6 px-10">
             <h3
               className="text-lg md:text-xl font-semibold mb-2"
               style={{ color: themeColor }}
@@ -91,28 +97,41 @@ const Template1 = ({
             </h3>
             <p className="text-gray-700">{formData.summary}</p>
           </section>
+         
         )}
 
         {/* Skills */}
         {formData?.skills?.length > 0 && (
-          <section className="mb-6">
+          <section className="mb-6 px-10">
             <h3
               className="text-lg md:text-xl font-semibold mb-2"
               style={{ color: themeColor }}
             >
               Skills
             </h3>
-            <ul className="grid grid-cols-2 md:grid-cols-3 gap-2 list-disc pl-6 text-gray-700">
-              {formData.skills.map((skill, index) => (
-                <li key={index}>{skill}</li>
-              ))}
-            </ul>
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-y-1 gap-x-4 text-gray-700">
+        {formData.skills.filter(Boolean).map((skill, i) => (
+          <div key={i} className="flex items-center gap-2">
+            <span
+              style={{
+                fontSize: "1rem",
+                lineHeight: "1",
+                color: "#000",
+                marginTop: "2px",
+              }}
+            >
+              •
+            </span>
+            <span>{skill}</span>
+          </div>
+        ))}
+      </div>
           </section>
         )}
 
         {/* Education */}
         {formData?.education?.length > 0 && (
-          <section className="mb-6">
+          <section className="mb-6 px-10">
             <h3
               className="text-lg md:text-xl font-semibold mb-2"
               style={{ color: themeColor }}
@@ -143,7 +162,7 @@ const Template1 = ({
 
         {/* Experience */}
         {formData?.experience?.length > 0 && (
-          <section className="mb-6">
+          <section className="mb-6 px-10">
             <h3
               className="text-lg md:text-xl font-semibold mb-2"
               style={{ color: themeColor }}
@@ -176,52 +195,87 @@ const Template1 = ({
 
         {/* Hobbies */}
         {formData?.hobbies?.length > 0 && (
-          <section className="mb-6">
+          <section className="mb-6 px-10">
             <h3
               className="text-lg md:text-xl font-semibold mb-2"
               style={{ color: themeColor }}
             >
               Hobbies
             </h3>
-            <ul className="grid grid-cols-2 md:grid-cols-3 gap-1 list-disc pl-5 text-gray-700">
-              {formData.hobbies.map((h, i) => (
-                <li key={i}>{h}</li>
-              ))}
-            </ul>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-gray-700 list-disc pl-5 max-w-2xl mx-auto">
+        {formData.hobbies.filter(Boolean).map((hobby, i) => (
+          <div key={i} className="flex items-center gap-2">
+            <span
+              style={{
+                fontSize: "1rem",
+                lineHeight: "1",
+                color: "#000",
+                marginTop: "2px",
+              }}
+            > •
+            </span>
+            <span>{hobby}</span>
+          </div>
+        ))}
+      </div>
           </section>
         )}
 
         {/* Languages */}
         {formData?.languages?.length > 0 && (
-          <section className="mb-6">
+          <section className="mb-6 px-10">
             <h3
               className="text-lg md:text-xl font-semibold mb-2"
               style={{ color: themeColor }}
             >
               Languages
             </h3>
-            <ul className="grid grid-cols-2 md:grid-cols-3 gap-1 list-disc pl-5 text-gray-700">
-              {formData.languages.map((l, i) => (
-                <li key={i}>{l}</li>
-              ))}
-            </ul>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-gray-700 list-disc pl-5 max-w-2xl mx-auto">
+        {formData.languages.filter(Boolean).map((lang, i) => (
+          <div key={i} className="flex items-center gap-2">
+            <span
+              style={{
+                fontSize: "1rem",
+                lineHeight: "1",
+                color: "#000",
+                marginTop: "2px",
+              }}
+            >
+              •
+            </span>
+            <span>{lang}</span>
+          </div>
+        ))}
+      </div>
           </section>
         )}
 
         {/* Awards */}
         {formData?.awards?.length > 0 && (
-          <section>
+          <section className="mb-6 px-10">
             <h3
               className="text-lg md:text-xl font-semibold mb-2"
               style={{ color: themeColor }}
             >
               Awards & Achievements
             </h3>
-            <ul className="grid grid-cols-2 md:grid-cols-3 gap-1 list-disc pl-5 text-gray-700">
-              {formData.awards.map((a, i) => (
-                <li key={i}>{a}</li>
-              ))}
-            </ul>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-gray-700 list-disc pl-5 max-w-2xl mx-auto">
+        {formData.awards.filter(Boolean).map((award, i) => (
+          <div key={i} className="flex items-center gap-2"> 
+            <span
+              style={{
+                fontSize: "1rem",
+                lineHeight: "1",
+                color: "#000",
+                marginTop: "2px",
+              }}
+            >
+              •
+            </span>
+            <span>{award}</span>
+          </div>
+        ))}
+      </div>
           </section>
         )}
       </div>
@@ -229,4 +283,4 @@ const Template1 = ({
   );
 };
 
-export default Template1;
+export default Template6;

@@ -18,7 +18,7 @@ const Template2 = ({
       <h2 className="text-xl font-semibold mb-4 text-center">Template 2</h2>
       <div
         id="resume-preview"
-        className="max-w-[900px] mx-auto my-8 rounded-lg overflow-hidden shadow-lg border"
+        className="max-w-[900px] mx-auto my-8 "
         style={{
           backgroundColor: bgColor,
           fontFamily: "Inter, sans-serif",
@@ -66,12 +66,12 @@ const Template2 = ({
             {/* Skills */}
             {formData?.skills?.length > 0 && (
               <div className="mt-2">
-                <h3 className="text-lg font-semibold mb-2 border-b border-white pb-1">
+                <h3 className="text-lg font-semibold mb-2 border-b border-white pb-3">
                   Skills
                 </h3>
                 <ul className="space-y-1 text-sm pl-2">
                   {formData.skills.map((skill, i) => (
-                    <li key={i}>• {skill}</li>
+                    <li key={i}> {skill}</li>
                   ))}
                 </ul>
               </div>
@@ -80,21 +80,21 @@ const Template2 = ({
             {/* ✅ Hobbies (only if added) */}
             {formData?.hobbies?.length > 0 && (
               <div className="mt-6">
-                <h3 className="text-lg font-semibold mb-2 border-b border-white pb-1">
+                <h3 className="text-lg font-semibold mb-2 border-b border-white pb-3">
                   Hobbies
                 </h3>
                 <ul className="space-y-1 text-sm pl-2">
                   {formData.hobbies.map((hobby, i) => (
-                    <li key={i}>• {hobby}</li>
+                    <li key={i}> {hobby}</li>
                   ))}
                 </ul>
               </div>
             )}
 
             {formData?.languages?.length > 0 && (
-          <section className="mb-6">
+          <section className="mt-6">
             <h3
-              className="text-lg font-semibold mb-2 border-b border-white pb-1"
+              className="text-lg font-semibold mb-2 border-b border-white pb-3"
             
             >
               Languages
@@ -109,9 +109,9 @@ const Template2 = ({
 
         {/* Awards */}
         {formData?.awards?.length > 0 && (
-          <section>
+          <section className="mt-6">
             <h3
-              className="text-lg font-semibold mb-2 border-b border-white pb-1"
+              className="text-lg font-semibold mb-2 border-b border-white pb-3"
             >
               Awards & Achievements
             </h3>
@@ -130,7 +130,7 @@ const Template2 = ({
             {formData?.summary && (
               <section>
                 <h3
-                  className="text-xl font-semibold mb-3 pb-1 border-b-2"
+                  className="text-xl font-semibold mb-3 pb-3 border-b-2"
                   style={{ borderColor: themeColor }}
                 >
                   Professional Summary
@@ -145,7 +145,7 @@ const Template2 = ({
             {formData?.education?.length > 0 && (
               <section>
                 <h3
-                  className="text-xl font-semibold mb-3 pb-1 border-b-2"
+                  className="text-xl font-semibold mb-3 pb-3 border-b-2"
                   style={{ borderColor: themeColor }}
                 >
                   Education
@@ -176,7 +176,7 @@ const Template2 = ({
             {formData?.experience?.length > 0 && (
               <section>
                 <h3
-                  className="text-xl font-semibold mb-3 pb-1 border-b-2"
+                  className="text-xl font-semibold mb-3 pb-3 border-b-2"
                   style={{ borderColor: themeColor }}
                 >
                   Experience
